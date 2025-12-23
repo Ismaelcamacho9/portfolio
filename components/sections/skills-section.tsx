@@ -2,35 +2,40 @@
 
 import { motion } from "framer-motion"
 import { Badge } from "@/components/ui/badge"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { AnimatedCard } from "@/components/shared/animated-card"
 import { fadeInUp, staggerContainer, staggerItem } from "@/lib/animations/variants"
+import { 
+  SiReact, SiNextdotjs, SiTypescript, SiTailwindcss, SiHtml5, SiJavascript,
+  SiNodedotjs, SiExpress, SiPostgresql, SiMongodb, SiGraphql,
+  SiGit, SiDocker, SiFigma, SiVercel, SiAmazon
+} from "react-icons/si"
+import { FaServer, FaCode } from "react-icons/fa"
 
 const skillsData = {
   frontend: [
-    { name: "React", level: 95 },
-    { name: "Next.js", level: 90 },
-    { name: "TypeScript", level: 88 },
-    { name: "Tailwind CSS", level: 92 },
-    { name: "HTML/CSS", level: 95 },
-    { name: "JavaScript", level: 93 },
+    { name: "React", years: "3+ años", icon: SiReact, color: "#61DAFB" },
+    { name: "Next.js", years: "2+ años", icon: SiNextdotjs, color: "#FFFFFF" },
+    { name: "TypeScript", years: "2+ años", icon: SiTypescript, color: "#3178C6" },
+    { name: "Tailwind CSS", years: "2+ años", icon: SiTailwindcss, color: "#06B6D4" },
+    { name: "HTML/CSS", years: "4+ años", icon: SiHtml5, color: "#E34F26" },
+    { name: "JavaScript", years: "4+ años", icon: SiJavascript, color: "#F7DF1E" },
   ],
   backend: [
-    { name: "Node.js", level: 85 },
-    { name: "Express", level: 82 },
-    { name: "PostgreSQL", level: 80 },
-    { name: "MongoDB", level: 78 },
-    { name: "REST APIs", level: 90 },
-    { name: "GraphQL", level: 75 },
+    { name: "Node.js", years: "3+ años", icon: SiNodedotjs, color: "#339933" },
+    { name: "Express", years: "2+ años", icon: SiExpress, color: "#FFFFFF" },
+    { name: "PostgreSQL", years: "2+ años", icon: SiPostgresql, color: "#4169E1" },
+    { name: "MongoDB", years: "2+ años", icon: SiMongodb, color: "#47A248" },
+    { name: "REST APIs", years: "3+ años", icon: FaServer, color: "#009688" },
+    { name: "GraphQL", years: "1+ año", icon: SiGraphql, color: "#E10098" },
   ],
   tools: [
-    { name: "Git & GitHub", level: 90 },
-    { name: "Docker", level: 75 },
-    { name: "VS Code", level: 95 },
-    { name: "Figma", level: 80 },
-    { name: "Vercel", level: 88 },
-    { name: "AWS", level: 70 },
+    { name: "Git & GitHub", years: "3+ años", icon: SiGit, color: "#F05032" },
+    { name: "Docker", years: "1+ año", icon: SiDocker, color: "#2496ED" },
+    { name: "VS Code", years: "4+ años", icon: FaCode, color: "#007ACC" },
+    { name: "Figma", years: "2+ años", icon: SiFigma, color: "#F24E1E" },
+    { name: "Vercel", years: "2+ años", icon: SiVercel, color: "#FFFFFF" },
+    { name: "AWS", years: "1+ año", icon: SiAmazon, color: "#FF9900" },
   ],
 }
 
@@ -78,45 +83,66 @@ export function SkillsSection() {
             {Object.entries(skillsData).map(([category, skills]) => (
               <TabsContent key={category} value={category} className="mt-0">
                 <motion.div 
-                  className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+                  className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
                   variants={staggerContainer}
                   initial="initial"
                   whileInView="animate"
                   viewport={{ once: true }}
                 >
-                  {skills.map((skill, index) => (
+                  {skills.map((skill) => (
                     <motion.div
                       key={skill.name}
                       variants={staggerItem}
+                      whileHover={{ y: -8 }}
+                      transition={{ type: "spring", stiffness: 300 }}
                     >
-                      <AnimatedCard 
-                        hoverEffect="lift"
-                        className="border-border/50 hover:border-primary/50 transition-colors group"
-                      >
-                        <CardContent className="pt-6">
-                          <div className="flex items-center justify-between mb-3">
-                            <span className="font-medium group-hover:text-primary transition-colors">
-                              {skill.name}
-                            </span>
-                            <span className="text-sm text-muted-foreground font-mono">
-                              {skill.level}%
-                            </span>
-                          </div>
-                          <div className="h-2 w-full bg-secondary rounded-full overflow-hidden">
-                            <motion.div
-                              className="h-full bg-gradient-to-r from-purple-500 via-pink-500 to-purple-500 bg-[length:200%_100%] animate-gradient"
-                              initial={{ width: 0 }}
-                              whileInView={{ width: `${skill.level}%` }}
-                              viewport={{ once: true }}
-                              transition={{ 
-                                duration: 1, 
-                                delay: index * 0.05,
-                                ease: "easeOut"
+                      <Card className="relative overflow-hidden border-border/50 hover:border-primary/50 transition-all duration-300 group h-full">
+                        {/* Fondo con gradiente en hover */}
+                        <div 
+                          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                          style={{ 
+                            background: `radial-gradient(circle at 50% 0%, ${skill.color}15 0%, transparent 70%)` 
+                          }}
+                        />
+                        
+                        <CardContent className="pt-8 pb-6 relative">
+                          {/* Icono grande */}
+                          <div className="flex justify-center mb-4">
+                            <div 
+                              className="w-16 h-16 flex items-center justify-center rounded-2xl transition-transform duration-300 group-hover:scale-110"
+                              style={{ 
+                                backgroundColor: `${skill.color}20`,
+                                boxShadow: `0 0 0 1px ${skill.color}30`
                               }}
-                            />
+                            >
+                              <skill.icon 
+                                className="w-8 h-8 transition-all duration-300" 
+                                style={{ color: skill.color }}
+                              />
+                            </div>
+                          </div>
+                          
+                          {/* Nombre */}
+                          <h3 className="text-center font-semibold text-lg mb-2 group-hover:text-primary transition-colors">
+                            {skill.name}
+                          </h3>
+                          
+                          {/* Experiencia */}
+                          <div className="flex justify-center">
+                            <Badge 
+                              variant="secondary" 
+                              className="text-xs"
+                              style={{ 
+                                backgroundColor: `${skill.color}15`,
+                                color: skill.color,
+                                borderColor: `${skill.color}30`
+                              }}
+                            >
+                              {skill.years}
+                            </Badge>
                           </div>
                         </CardContent>
-                      </AnimatedCard>
+                      </Card>
                     </motion.div>
                   ))}
                 </motion.div>
